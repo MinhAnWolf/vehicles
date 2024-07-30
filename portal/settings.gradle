@@ -1,0 +1,6 @@
+rootProject.name = 'portal'
+include ':common'
+include ':business'
+
+project(':common').projectDir = new File(settingsDir, 'common')
+project(':business').projectDir = new File(settingsDir, 'business')

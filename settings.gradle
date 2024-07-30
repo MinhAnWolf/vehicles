@@ -1,1 +1,8 @@
 rootProject.name = 'vehicles'
+include ':common'
+include ':business'
+include ':portal'
+
+project(':common').projectDir = new File(settingsDir, 'common')
+project(':business').projectDir = new File(settingsDir, 'business')
+project(':portal').projectDir = new File(settingsDir, 'portal')
