@@ -18,8 +18,8 @@ repositories {
 }
 
 dependencies {
-	implementation project(':common')
 	implementation project(':business')
+	implementation project(':common')
 }
 
 tasks.named('test') {

@@ -1,13 +1,11 @@
 package com.example.business.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
+import java.util.List;
 
 @Entity
 @Table(name = "Users")
@@ -23,4 +21,6 @@ public class Users {
   private String role;
   private String idMaintenance;
   private String idVehicles;
+  @OneToMany(mappedBy = "users")
+  private List<Vehicles> vehicles;
 }
