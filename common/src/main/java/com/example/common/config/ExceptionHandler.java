@@ -16,6 +16,7 @@ public interface ExceptionHandler {
     private ApiError apiError;
 
     public SystemErrorException(String message) {
+      super(message);
       apiError = new ApiError();
       apiError.setMessage(message);
       apiError.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -23,6 +24,7 @@ public interface ExceptionHandler {
     }
 
     public SystemErrorException(String message, String exception) {
+      super(message);
       apiError = new ApiError();
       apiError.setMessage(message);
       apiError.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -43,6 +45,7 @@ public interface ExceptionHandler {
     private ApiError apiError;
 
     public BadRequestException(String message) {
+      super(message);
       apiError = new ApiError();
       apiError.setMessage(message);
       apiError.setHttpStatus(HttpStatus.BAD_REQUEST);
@@ -50,6 +53,7 @@ public interface ExceptionHandler {
     }
 
     public BadRequestException(String message, String exception) {
+      super(message);
       apiError = new ApiError();
       apiError.setMessage(message);
       apiError.setHttpStatus(HttpStatus.BAD_REQUEST);

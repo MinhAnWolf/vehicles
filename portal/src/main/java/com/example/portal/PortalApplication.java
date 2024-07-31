@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "com.example.business.repository")
 @EntityScan(basePackages = "com.example.business.entity") // Thêm dòng này
-@ComponentScan({"com.example.portal", "com.example.business"})
+@ComponentScan({"com.example.portal", "com.example.business", "com.example.common"})
 public class PortalApplication extends SpringBootServletInitializer {
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

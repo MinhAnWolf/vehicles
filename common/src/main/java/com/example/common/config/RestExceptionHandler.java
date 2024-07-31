@@ -9,7 +9,6 @@ public class RestExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(value = {ExceptionHandler.SystemErrorException.class, ExceptionHandler.BadRequestException.class,
             Exception.class, RuntimeException.class})
     public ResponseEntity<ApiError> handleException(ExceptionHandler e) {
-        System.out.println(e.outputError());
         return e.outputError();
     }
 }
