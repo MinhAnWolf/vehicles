@@ -1,12 +1,12 @@
 package com.example.business.dto;
 
 import com.example.business.entity.Vehicles;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.sql.Date;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class MaintenanceRecordDTO {

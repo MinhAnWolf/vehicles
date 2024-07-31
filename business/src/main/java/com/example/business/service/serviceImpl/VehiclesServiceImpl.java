@@ -57,6 +57,8 @@ public class VehiclesServiceImpl implements CRUD<VehicleDTO, BaseResponse> {
 
     @Override
     public BaseResponse update(VehicleDTO request) {
+        Log.startLog(SERVICE_NAME, "update");
+        Log.inputLog(request);
         if(Objects.isNull(request.getId())) {
             Log.outputLog("Vehicle is not exist");
             throw new BadRequestException("Vehicle is not exist");
@@ -86,11 +88,14 @@ public class VehiclesServiceImpl implements CRUD<VehicleDTO, BaseResponse> {
     }
 
     public BaseResponse readVehicle(Long userId) {
-        // check is owner or admin then action service
+        Log.startLog(SERVICE_NAME, "readVehicle");
+        Log.inputLog(userId);
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(vehiclesRepository.getCollectVehicles(userId));
         baseResponse.setErrCode(0);
         baseResponse.setMessage("Fetch data successfully");
+        Log.outputLog(baseResponse);
+        Log.endLog(SERVICE_NAME, "readVehicle");
         return baseResponse;
     }
 

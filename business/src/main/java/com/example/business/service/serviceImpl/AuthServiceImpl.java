@@ -30,6 +30,11 @@ public class AuthServiceImpl implements AuthService {
         Log.startLog(SERVICE_NAME, "Register");
         Log.inputLog(authDto);
         Validator.checkInputParameter(authDto);
+        if (!authDto.getPassword().equals(authDto.getConfirmPassword())) {
+            Log.outputLog(authDto);
+            Log.endLog(SERVICE_NAME, "Register");
+            throw new BadRequestException("password and confirm password do not match");
+        }
         try {
             // check user exist
             Integer exist = usersRepository.countUsersByUsername(authDto.getUsername());

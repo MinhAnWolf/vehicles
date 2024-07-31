@@ -9,9 +9,9 @@ public interface ExceptionHandler {
 
   ResponseEntity<ApiError> outputError();
 
-  @EqualsAndHashCode(callSuper = true)
   @AllArgsConstructor
-  @Data
+  @Getter
+  @Setter
   class SystemErrorException extends RuntimeException implements ExceptionHandler {
     private ApiError apiError;
 
@@ -35,10 +35,10 @@ public interface ExceptionHandler {
     }
   }
 
-  @EqualsAndHashCode(callSuper = true)
   @AllArgsConstructor
   @NoArgsConstructor
-  @Data
+  @Getter
+  @Setter
   class BadRequestException extends RuntimeException implements ExceptionHandler {
     private ApiError apiError;
 
