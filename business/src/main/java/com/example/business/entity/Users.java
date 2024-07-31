@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Users")
@@ -21,6 +22,6 @@ public class Users {
   private String role;
   private String idMaintenance;
   private String idVehicles;
-  @OneToMany(mappedBy = "users")
-  private List<Vehicles> vehicles;
+  @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<Vehicles> vehicles;
 }

@@ -12,6 +12,9 @@ public class Validator {
         for (Field field : dto.getClass().getDeclaredFields()) {
                 field.setAccessible(true);
                 Object value = field.get(dto);
+                if (field.getName().equals("id")) {
+                    continue;
+                }
                 if (value == null) {
                     throw new BadRequestException("Input invalid ");
                 }

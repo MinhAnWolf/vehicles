@@ -26,8 +26,9 @@ public class Filter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getRequestURI().contains(ApiConstant.API_LOGIN)
-                || request.getRequestURI().contains(ApiConstant.API_REGISTER)) {
+        String reqURI = request.getRequestURI();
+        if (reqURI.contains(ApiConstant.API_LOGIN)
+                || reqURI.contains(ApiConstant.API_REGISTER)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -39,11 +40,19 @@ public class Filter extends OncePerRequestFilter {
             return;
         }
 
-        Optional<Users> usersFetch = usersRepository.findById(idUser);
+        Optional<Users> usersFetch = usersRepository.findById(Long.valueOf(idUser));
         String token = authorizationHeader.substring(7);
         Claims claims = tokenUtils.decodeToken(token);
         if (usersFetch.isPresent() && usersFetch.get().getUsername().equals(claims.getSubject())) {
-                filterChain.doFilter(request, response);
+            if(reqURI.contains(ApiConstant.API_VEHICLES + ApiConstant.API_ADD)) {
+                if (isAdmin(usersFetch.get().getRole())) {
+                    filterChain.doFilter(request, response);
+                } else {
+                    unAuthorized(response);
+                }
+                return;
+            }
+            filterChain.doFilter(request, response);
         } else {
             unAuthorized(response);
         }
@@ -52,6 +61,10 @@ public class Filter extends OncePerRequestFilter {
     private void unAuthorized(HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().write("Access denied");
+    }
+
+    private boolean isAdmin(String role) throws IOException {
+        return role.equals("ADMIN");
     }
 }
 

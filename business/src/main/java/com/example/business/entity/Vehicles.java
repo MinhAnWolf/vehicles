@@ -2,14 +2,14 @@ package com.example.business.entity;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "Vehicles")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Vehicles {
@@ -29,6 +29,6 @@ public class Vehicles {
   @JoinColumn(name = "ID_USER")
   private Users users;
 
-  @OneToOne(mappedBy = "vehicles")
+  @OneToOne(mappedBy = "vehicles", fetch = FetchType.LAZY)
   private MaintenanceRecords maintenanceRecords;
 }

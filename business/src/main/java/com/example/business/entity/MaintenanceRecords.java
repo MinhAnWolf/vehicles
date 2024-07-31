@@ -1,15 +1,15 @@
 package com.example.business.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Date;
 
 @Entity
 @Table(name = "MaintenanceRecords")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class MaintenanceRecords {
@@ -18,6 +18,9 @@ public class MaintenanceRecords {
   private Long id;
 
   private Date serviceDate;
+
+  private String description;
+  private float associatedCost;
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "vehicles_id", referencedColumnName = "id")

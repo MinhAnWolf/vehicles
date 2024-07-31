@@ -9,7 +9,6 @@ import com.example.business.utils.PasswordUtils;
 import com.example.business.utils.TokenUtils;
 import com.example.business.utils.Validator;
 import com.example.common.Log;
-import com.example.common.config.ExceptionHandler;
 import com.example.common.config.ExceptionHandler.*;
 import com.example.common.model.BaseResponse;
 import org.slf4j.Logger;
@@ -20,8 +19,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthServiceImpl implements AuthService {
     private static final String SERVICE_NAME = "AuthServiceImpl";
-    private static final Logger log = LoggerFactory.getLogger(AuthServiceImpl.class);
-
     @Autowired
     private UsersRepository usersRepository;
 
@@ -30,10 +27,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public BaseResponse register(AuthDTO authDto) {
+        Log.startLog(SERVICE_NAME, "Register");
+        Log.inputLog(authDto);
+        Validator.checkInputParameter(authDto);
         try {
-            Log.startLog("Register", SERVICE_NAME);
-            Log.inputLog(authDto);
-            Validator.checkInputParameter(authDto);
             // check user exist
             Integer exist = usersRepository.countUsersByUsername(authDto.getUsername());
             if (exist > 0) {
@@ -50,13 +47,12 @@ public class AuthServiceImpl implements AuthService {
             baseResponse.setMessage("Register success");
             baseResponse.setData(null);
             Log.outputLog(baseResponse);
-            Log.endLog("Register", SERVICE_NAME);
+            Log.endLog(SERVICE_NAME, "Register");
             return baseResponse;
         } catch (Exception e) {
-            String messageError = e.getMessage();
-            Log.outputLog(messageError);
-            Log.endLog("Register", SERVICE_NAME);
-            throw new SystemErrorException(messageError);
+            Log.errorLog(e.getMessage());
+            Log.endLog(SERVICE_NAME, "Register");
+            throw new SystemErrorException("System error");
         }
     }
 

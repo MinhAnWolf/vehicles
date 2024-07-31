@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UsersRepository extends JpaRepository<Users, String> {
+public interface UsersRepository extends JpaRepository<Users, Long> {
     @Query(value = "SELECT COUNT(*) FROM USERS WHERE username = :username", nativeQuery = true)
     Integer countUsersByUsername(@Param("username") String username);
 
