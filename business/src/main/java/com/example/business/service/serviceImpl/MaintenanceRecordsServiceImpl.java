@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -44,10 +45,14 @@ public class MaintenanceRecordsServiceImpl implements CRUD<MaintenanceRecordDTO,
             if (!request.getUserIdReq().equals(vehicle.getUsers().getId()) || !user.getRole().equals("ADMIN")) {
                 throw new BadRequestException("You do not have to be the owner to perform this action.");
             }
-            maintenanceRecordsRepository.save(convertEntity(request, vehicle));
-            baseResponse.setMessage("Created maintenance successfully");
+            if (Objects.isNull(request.getId())) {
+                baseResponse.setMessage("Created maintenance successfully");
+            } else {
+                baseResponse.setMessage("Update maintenance successfully");
+            }
             baseResponse.setData(null);
             baseResponse.setErrCode(0);
+            maintenanceRecordsRepository.save(convertEntity(request, vehicle));
         } else {
             baseResponse.setErrCode(1);
             baseResponse.setData(null);
@@ -73,6 +78,9 @@ public class MaintenanceRecordsServiceImpl implements CRUD<MaintenanceRecordDTO,
 
     private MaintenanceRecords convertEntity(MaintenanceRecordDTO dto, Vehicles vehicles) {
         MaintenanceRecords entity = new MaintenanceRecords();
+        if(dto.getId() != null) {
+            entity.setId(dto.getId());
+        }
         entity.setServiceDate(dto.getServiceDate());
         entity.setDescription(dto.getDescription());
         entity.setVehicles(vehicles);

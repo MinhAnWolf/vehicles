@@ -28,10 +28,11 @@ public class MaintenanceRecordsController {
 //        return ResponseEntity.ok();
 //    }
 //
-//    @PatchMapping(ApiConstant.API_UPDATE)
-//    public ResponseEntity<?> update(@RequestBody AuthDTO authDto) {
-//        return ResponseEntity.ok();
-//    }
+    @PatchMapping(ApiConstant.API_UPDATE)
+    public ResponseEntity<?> update(@RequestBody MaintenanceRecordDTO maintenanceRecordDto, @RequestHeader("id") String userRq) {
+        maintenanceRecordDto.setUserIdReq(Long.parseLong(userRq));
+        return ResponseEntity.ok(maintenanceRecordsService.create(maintenanceRecordDto));
+    }
 //    @DeleteMapping(ApiConstant.API_DELETE)
 //    public ResponseEntity<?> update(@RequestBody AuthDTO authDto) {
 //        return ResponseEntity.ok();
